@@ -1,1 +1,1 @@
-Teste de projeto para github
+Teste de projeto para pygame
