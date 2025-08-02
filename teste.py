@@ -19,16 +19,6 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             exit()
-        '''
-        if event.type == KEYDOWN:
-            if event.key == K_a:
-                x -= 20
-            if event.key == K_d:
-                x += 20
-            if event.key == K_w:
-                y -= 20
-            if event.key == K_s:
-                y += 20'''
 
     if pygame.key.get_pressed()[K_a]:
         x -= 5
@@ -38,7 +28,7 @@ while True:
         y -= 5
     elif pygame.key.get_pressed()[K_s]:
         y += 5
-        
+
     pygame.draw.rect(tela, (144, 238, 144), (x, y, 40, 40))
     
     pygame.display.update()
