@@ -1,1 +1,1 @@
-Esse repositório marcará meu início no pygame
+My first pygame project
