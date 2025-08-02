@@ -15,9 +15,16 @@ tela = pygame.display.set_mode((640, 480))
 pygame.display.set_caption('game')
 clock = pygame.time.Clock()
 
+fonte = pygame.font.SysFont('arial', 40, True, True)
+
+pontos = 0
+
 while True:
     clock.tick(60)
     tela.fill((0,0,0))
+
+    mensagem = f'Pontos: {pontos}'
+    texto_formatado = fonte.render(mensagem, True, (255, 255, 255))
 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -39,5 +46,7 @@ while True:
     if ret_sla.colliderect(ret_ver):
         x_ver = randint(20, 235)
         y_ver = randint(20, 230)
+        pontos += 1
     
+    tela.blit(texto_formatado, (230, 430))
     pygame.display.update()
