@@ -14,6 +14,8 @@ while True:
             pygame.quit()
             exit()
 
-    pygame.draw.rect(tela, (200, 10, 34), (320, 240, 40, 50))
+    pygame.draw.rect(tela, (0, 255, 0), (320, 240, 40, 50))
+    pygame.draw.circle(tela, (0, 0, 255), (200, 100), 40)
+    pygame.draw.line(tela, (255, 0, 0), (20, 90), (100, 40), 3)
 
     pygame.display.update()
