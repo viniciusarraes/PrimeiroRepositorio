@@ -16,6 +16,9 @@ player_y = 320 - 30
 #ground
 ground = pygame.Rect(0, 320, 400, 480 - 320)
 
+#platform
+
+
 #name the window
 pygame.display.set_caption("main_screen")
 
@@ -30,23 +33,26 @@ while running:
     
     pressed_key = pygame.key.get_pressed()
     if pressed_key[pygame.K_a]:
-        player_x -= 3
+        if player_x > 0:
+            player_x -= 3
     elif pressed_key[pygame.K_d]:
-        player_x += 3
+        if player_x + 30 < 400:
+            player_x += 3
     elif pressed_key[pygame.K_SPACE]:
         if player_y + 30 == 320:
-            player_y -= 40
+            player_y -= 60
     
     screen.fill((0,0,0))
 
     #gravity
-    if player_y + 30 == 320:
+    if player_y + 30 == 320 or (player_y + 30 == 280 and player_x + 30 >= 250 and player_x <= 250 + 80):
         player_y += 0
     else:
         player_y += 1
 
     pygame.draw.rect(screen, (139, 69, 19), ground)
     pygame.draw.rect(screen, (128, 0, 128), (player_x, player_y, 30, 30))
+    pygame.draw.rect(screen, (139, 69, 19), (250, 280, 80, 10))
 
     pygame.display.update()
 
