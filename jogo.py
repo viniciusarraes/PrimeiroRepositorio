@@ -1,55 +1,56 @@
 import pygame
+from pygame.locals import *
+from sys import exit
+from random import randint
 
 pygame.init()
 
-screen_widht = 800
-screen_height = 600
-screen = pygame.display.set_mode((screen_widht, screen_height))
+largura = 640
+altura = 480
+x = largura//2
+y = altura//2
 
-pygame.display.set_caption('new_game')
+x_azul = randint(40, 60)
+y_azul = randint(50, 430)
 
-brown = (100, 40, 0)
-blue = (0, 0, 255)
+fonte = pygame.font.SysFont('arial', 40, True, True)
 
-player = pygame.Rect(0, 470, 30, 30)
-platform = pygame.Rect(50, 400, 200, 20)
-ground = pygame.Rect(0, 500, screen_widht, screen_height - 500)
+pontos = 0
 
-clock = pygame.time.Clock()
+tela = pygame.display.set_mode((largura, altura))
+pygame.display.set_caption('snake_game')
+relogio = pygame.time.Clock()
 
-running = True
-while running:
-    clock.tick(60)
+while True:
+    relogio.tick(35)
+    tela.fill((0,0,0))
+
+    mensagem = f'Pontos: {pontos}'
+    texto_formatado = fonte.render(mensagem, True, (255,255,255))
+
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+        if event.type == QUIT:
+            pygame.quit()
+            exit()
     
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_a]:
-        player.x -= 5
-    if keys[pygame.K_d]:
-        player.x += 5
-    if keys[pygame.K_SPACE]:
-        player.y -= 5
-
-    if player.colliderect(platform):
-        if player.bottom >= platform.top and player.bottom <= platform.bottom and player.right > platform.left and player.left < platform.right:
-            player.y = platform.top - player.height
+    chave = pygame.key.get_pressed()
+    if chave[K_a]:
+        x -= 20
+    elif chave[K_d]:
+        x += 20
+    elif chave[K_w]:
+        y -= 20
+    elif chave[K_s]:
+        y += 20
     
-    if player.colliderect(platform):
-        if player.top <= platform.bottom and player.top >= platform.top and player.right > platform.left and player.left < platform.right:
-            player.y = platform.bottom 
+    ret_vermelho = pygame.draw.rect(tela, (255,0,0), (x, y, 40, 50))
+    ret_azul = pygame.draw.rect(tela, (0,0,255), (x_azul, y_azul, 40, 50))
 
-    if player.colliderect(ground):
-        player.y += 0
-    else:
-        player.y += 5
+    if ret_vermelho.colliderect(ret_azul):
+        x_azul = randint(40, 600)
+        y_azul = randint(50, 430)
+        pontos += 1
+
+    tela.blit(texto_formatado, (430, 40))
     
-    screen.fill((0,0,0))
-    pygame.draw.rect(screen, blue, player)
-    pygame.draw.rect(screen, brown, platform)
-    pygame.draw.rect(screen, brown, ground)
-
-    pygame.display.flip()
-
-pygame.quit()
+    pygame.display.update()
